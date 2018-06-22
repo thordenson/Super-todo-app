@@ -8,20 +8,22 @@ const cn = {                        //setting up db info
 };
 const db = pgp(cn);                //connect! const db is saving that connection to a variable
 
-function getTodo(id) {
-    db.any('SELECT * FROM todos WHERE id=$1', [id])      // value in brackets gets substituted into $1. This is pg-promise syntax used to prevent hackers
-        .then(function(data) {
-            // success;
-            console.log(data);
-        })
-        .catch(function(error) {
-            // error;
-            console.log(error);
-        });
+function getOne(id) {
+    return db.oneOrNone('SELECT * FROM todos WHERE id=$1', [id])     // value in brackets gets substituted into $1. This is pg-promise syntax used to prevent hackers
+        //can have db.any, db.one, db.query, db.oneOrNone, db.many, etc.
 }
-//getTodo(2);
+// An examle:
+// getOne(2)
+//         .then(function(data) {
+//             // success;
+//             console.log(data);
+//         })
+//         .catch(function(error) {
+//             // error;
+//             console.log(error);
+//         });
 
 
 module.exports = {
-  getTodo: getTodo
+  getOne: getOne
 };
