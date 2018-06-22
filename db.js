@@ -37,6 +37,7 @@ function getAll() {
 function getPending() {
     return db.any('SELECT * FROM todos WHERE isDone=false');
 }
+//An example: returns all pending todos
 // getPending()
 //     .then((data) => { console.log(data); })
 //     .catch((error) => { console.log(error); });
@@ -44,13 +45,26 @@ function getPending() {
 function getFinished() {
     return db.any('SELECT * FROM todos WHERE isDone=true');
 }
+//An example: returns all completed todos
 // getFinished()
 //     .then((data) => { console.log(data); })
 //     .catch((error) => { console.log(error); });
+
+
+function searchByTitle(searchString) {
+    return db.any("SELECT * FROM todos WHERE title ilike '%$1:value%'", 
+    [searchString]);
+}
+//An example: returns todo with matching title
+searchByTitle('scoop')
+    .then((data) => { console.log(data); })
+    .catch((error) => { console.log(error); });
+
 
 module.exports = {
   getOne: getOne,
   getAll: getAll,
   getPending: getPending,
-  getFinished: getFinished
+  getFinished: getFinished,
+  searchByTitle: searchByTitle
 };
