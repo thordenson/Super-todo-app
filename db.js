@@ -42,6 +42,7 @@ function getPending() {
 //     .then((data) => { console.log(data); })
 //     .catch((error) => { console.log(error); });
 
+
 function getFinished() {
     return db.any('SELECT * FROM todos WHERE isDone=true');
 }
@@ -56,15 +57,23 @@ function searchByTitle(searchString) {
     [searchString]);
 }
 //An example: returns todo with matching title
-searchByTitle('scoop')
+// searchByTitle('scoop')
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
+
+function deleteById(id) {
+    return db.result('DELETE FROM todos WHERE id=$1', [id])
+}
+//An example: deletes todo by id specified
+deleteById(7)
     .then((data) => { console.log(data); })
     .catch((error) => { console.log(error); });
-
 
 module.exports = {
   getOne: getOne,
   getAll: getAll,
   getPending: getPending,
   getFinished: getFinished,
-  searchByTitle: searchByTitle
+  searchByTitle: searchByTitle,
+  deleteById: deleteById
 };
