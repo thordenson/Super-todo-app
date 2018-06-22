@@ -30,11 +30,27 @@ function getAll() {
 }
 //An example:  lists all the todos into in array. alltodos promise
 // getAll()
-    // .then((data) => { console.log(data); })
-    // .catch((error) => { console.log(error); });
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
 
+
+function getPending() {
+    return db.any('SELECT * FROM todos WHERE isDone=false');
+}
+// getPending()
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
+
+function getFinished() {
+    return db.any('SELECT * FROM todos WHERE isDone=true');
+}
+// getFinished()
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
 
 module.exports = {
   getOne: getOne,
-  getAll: getAll
+  getAll: getAll,
+  getPending: getPending,
+  getFinished: getFinished
 };
