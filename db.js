@@ -74,9 +74,27 @@ function setFinished(id, isDone) {
     return db.result('UPDATE todos SET isDone=$1 WHERE id=$2', [isDone, id]);
 }
 //An example: sets specifid todo as finished through id
-setFinished(3, true)
-    .then((data) => { console.log(data); })
-    .catch((error) => { console.log(error); });
+// setFinished(3, true)
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
+
+
+function setTitle(id, newTitle) {
+    return db.result("UPDATE todos SET title='$1:value' WHERE id=$2", [newTitle, id]);
+}
+//An example: changes the title of specified id todo to whatever is specified in newTitle
+// setTitle(1, 'walk the dog')
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
+
+
+function add(title) {
+    return db.one("INSERT into todos (title, isDone) values ('$1:value', false) returning id", [title]);
+}
+//An example: inserts a new todo
+// add('drink some bourbon')
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
 
 module.exports = {
   getOne: getOne,
@@ -85,5 +103,7 @@ module.exports = {
   getFinished: getFinished,
   searchByTitle: searchByTitle,
   deleteById: deleteById,
-  setFinished: setFinished
+  setFinished: setFinished,
+  setTitle: setTitle,
+  add: add
 };
