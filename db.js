@@ -65,7 +65,16 @@ function deleteById(id) {
     return db.result('DELETE FROM todos WHERE id=$1', [id])
 }
 //An example: deletes todo by id specified
-deleteById(7)
+// deleteById(7)
+//     .then((data) => { console.log(data); })
+//     .catch((error) => { console.log(error); });
+
+
+function setFinished(id, isDone) {
+    return db.result('UPDATE todos SET isDone=$1 WHERE id=$2', [isDone, id]);
+}
+//An example: sets specifid todo as finished through id
+setFinished(3, true)
     .then((data) => { console.log(data); })
     .catch((error) => { console.log(error); });
 
@@ -75,5 +84,6 @@ module.exports = {
   getPending: getPending,
   getFinished: getFinished,
   searchByTitle: searchByTitle,
-  deleteById: deleteById
+  deleteById: deleteById,
+  setFinished: setFinished
 };
