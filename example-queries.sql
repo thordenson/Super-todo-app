@@ -39,6 +39,21 @@ UPDATE todos
     SET title='cook amazing dinner'
     WHERE id=3;
 
+--change title AND isDONE
+UPDATE todos
+    SET title='cook amazing dinner',
+    isDone= true
+    WHERE id=3;
+
+--delete by ID
+DELETE FROM todos
+    WHERE id=4;
+
+--delete all finished todos where isDone is true
+DELETE FROM todos
+    WHERE isDone= true;
+
+
 
 	
 
