@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
 const Todo = require('./db');          // returns the module.exports functions from db.js
 
 const expressHbs = require('express-handlebars');
@@ -25,12 +28,30 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/new', (req, res) => {
+    console.log('This is the /new route');
+    res.render('todo-create-page')
+  });
+  
+
+app.post('/new', (req, res) => {
+  console.log(req.body);
+
+    Todo.add(req.body.title)
+      .then((data) => {
+          console.log(data);
+          res.send(data);
+      })
+
+});
+
 app.get('/:id', (req, res) => {
+    console.log('This is the /:id route');
     Todo.getOne(req.params.id)
         .then((data) => {
             console.log(data);         
-            res.send(data);
-            // res.render('todo-render-page', data);
+            // res.send(data);
+            res.render('todo-detail-page', data);
         })
         .catch((error) => {console.log(error); 
     });
@@ -40,8 +61,3 @@ app.get('/:id', (req, res) => {
 app.listen(3000, () => {
     console.log('Your server is running Port 3000');
 });
-
-
-
-
-
